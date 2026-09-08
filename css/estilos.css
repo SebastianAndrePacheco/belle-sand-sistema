@@ -1,0 +1,251 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: #f4f5f7;
+  color: #1f2430;
+}
+
+.oculto { display: none !important; }
+
+/* Login */
+.login-pantalla {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-tarjeta {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 340px;
+}
+
+.login-tarjeta h1 {
+  font-size: 1.25rem;
+  margin: 0 0 1.5rem;
+  text-align: center;
+}
+
+.login-logo {
+  display: block;
+  max-width: 120px;
+  max-height: 120px;
+  margin: 0 auto 1rem;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.marca-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.marca h2 {
+  margin: 0;
+}
+
+.campo {
+  margin-bottom: 1rem;
+}
+
+.campo label {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 0.35rem;
+  color: #555;
+}
+
+.campo input, .campo select {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #d5d8dd;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.boton {
+  width: 100%;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 8px;
+  background: #2a6df4;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.boton:hover { background: #1c56d0; }
+.boton--secundario { background: #e2e5ea; color: #1f2430; }
+.boton--secundario:hover { background: #cdd1d8; }
+
+.boton-chico {
+  width: auto;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+.modulo-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modulo-topbar h2 {
+  margin: 0;
+}
+
+.error-mensaje {
+  color: #c0392b;
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+  text-align: center;
+}
+
+/* Shell de la app */
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.app-barra-lateral {
+  width: 220px;
+  background: #1f2430;
+  color: #fff;
+  padding: 1.5rem 1rem;
+  flex-shrink: 0;
+}
+
+.app-barra-lateral h2 {
+  font-size: 1rem;
+  margin: 0 0 1.5rem;
+}
+
+.app-barra-lateral nav a {
+  display: block;
+  color: #c7cbd4;
+  text-decoration: none;
+  padding: 0.6rem 0.5rem;
+  border-radius: 6px;
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.app-barra-lateral nav a:hover,
+.app-barra-lateral nav a.activo {
+  background: #2f3646;
+  color: #fff;
+}
+
+.app-contenido {
+  flex: 1;
+  padding: 1.5rem 2rem;
+}
+
+.app-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.app-topbar .usuario-info {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Tablas */
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tabla th, .tabla td {
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid #eee;
+  font-size: 0.9rem;
+}
+
+.tabla th {
+  background: #f0f1f4;
+}
+
+.tabla-vacia {
+  color: #888;
+  font-style: italic;
+}
+
+/* Toasts */
+#toasts {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 1000;
+}
+
+.toast {
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.toast--info { background: #2a6df4; }
+.toast--exito { background: #2ea043; }
+.toast--error { background: #c0392b; }
+
+/* Modal */
+.modal-fondo {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+}
+
+.modal-caja {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 480px;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.modal-caja h3 {
+  margin-top: 0;
+}
+
+.tarjeta-info {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+@media (max-width: 720px) {
+  .app-shell { flex-direction: column; }
+  .app-barra-lateral { width: 100%; }
+}
