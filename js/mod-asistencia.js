@@ -16,13 +16,21 @@ async function renderAsistencia() {
     { campo: 'tipo', etiqueta: 'Tipo' },
     { campo: 'ts_servidor', etiqueta: 'Fecha y hora' },
     { campo: 'flag_sospechoso', etiqueta: 'Sospechoso' },
-    { campo: 'motivo_sospecha', etiqueta: 'Motivo' }
+    { campo: 'motivo_sospecha', etiqueta: 'Motivo' },
+    { campo: 'ubicacion', etiqueta: 'Ubicación' }
   ];
 
   async function cargar() {
     const accion = esGerencial ? 'asistencia.list' : 'asistencia.misMarcas';
     const data = await llamarConManejoDeErrores(llamarApi(accion, {}));
-    renderTabla('tabla-asistencia', columnas, data.items);
+    const items = data.items.map(function (item) {
+      const copia = Object.assign({}, item);
+      copia.ubicacion = (item.lat && item.lng)
+        ? '<a href="https://www.google.com/maps?q=' + item.lat + ',' + item.lng + '" target="_blank" rel="noopener">Ver en el mapa</a>'
+        : '—';
+      return copia;
+    });
+    renderTabla('tabla-asistencia', columnas, items);
   }
 
   function obtenerUbicacion() {
