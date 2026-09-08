@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Belle Sand — Ingreso</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <div class="login-pantalla">
+    <form class="login-tarjeta" id="form-login">
+      <img src="img/logo.png" alt="Belle Sand" class="login-logo">
+      <h1>Belle Sand</h1>
+      <div class="campo">
+        <label for="usuario">Usuario</label>
+        <input type="text" id="usuario" autocomplete="username" required>
+      </div>
+      <div class="campo">
+        <label for="pin">PIN</label>
+        <input type="password" id="pin" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="boton">Ingresar</button>
+      <p class="error-mensaje oculto" id="mensaje-error"></p>
+    </form>
+  </div>
+
+  <div id="toasts"></div>
+
+  <script src="config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.getElementById('form-login').addEventListener('submit', async function (ev) {
+      ev.preventDefault();
+      const errorEl = document.getElementById('mensaje-error');
+      errorEl.classList.add('oculto');
+
+      const usuario = document.getElementById('usuario').value.trim();
+      const pin = document.getElementById('pin').value;
+
+      try {
+        await iniciarSesion(usuario, pin);
+        location.href = 'app.html';
+      } catch (err) {
+        errorEl.textContent = err.msg || 'Usuario o PIN incorrecto';
+        errorEl.classList.remove('oculto');
+      }
+    });
+
+    if (sessionStorage.getItem('token')) location.href = 'app.html';
+  </script>
+</body>
+</html>
