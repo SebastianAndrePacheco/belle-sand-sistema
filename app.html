@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Belle Sand</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="app-barra-lateral">
+      <div class="marca">
+        <img src="img/logo.png" alt="Belle Sand" class="marca-logo">
+        <h2>Belle Sand</h2>
+      </div>
+      <nav id="menu-modulos"></nav>
+    </aside>
+
+    <main class="app-contenido">
+      <div class="app-topbar">
+        <div class="usuario-info" id="usuario-info"></div>
+        <button class="boton boton--secundario" id="btn-logout" style="width:auto;">Cerrar sesión</button>
+      </div>
+
+      <div id="vista">
+        <div class="tarjeta-info">
+          <h3>Bienvenido</h3>
+          <p>Selecciona un módulo en el menú. Los módulos se irán habilitando conforme se definan sus campos y se implemente el CRUD en el backend.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toasts"></div>
+
+  <div class="modal-fondo oculto" id="modal-fondo">
+    <div class="modal-caja">
+      <h3 id="modal-titulo"></h3>
+      <div id="modal-cuerpo"></div>
+      <button class="boton boton--secundario" style="margin-top:1rem;" onclick="cerrarModal()">Cerrar</button>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/mod-generico.js"></script>
+  <script src="js/mod-comandas.js"></script>
+  <script src="js/mod-ventas.js"></script>
+  <script src="js/mod-objetos.js"></script>
+  <script src="js/mod-asistencia.js"></script>
+  <script src="js/mod-usuarios.js"></script>
+  <script src="js/mod-auditoria.js"></script>
+  <script>
+    const MODULOS = [
+      { id: 'comandas', etiqueta: 'Comandas', permiso: 'comandas:read', render: function () { renderModuloGenerico(CONFIG_COMANDAS); } },
+      { id: 'ventas', etiqueta: 'Ventas de productos', permiso: 'ventas:read', render: function () { renderModuloGenerico(CONFIG_VENTAS); } },
+      { id: 'objetos', etiqueta: 'Objetos olvidados', permiso: 'objetos:read', render: renderObjetos },
+      { id: 'asistencia', etiqueta: 'Asistencia', permiso: 'asistencia:read', render: renderAsistencia },
+      { id: 'usuarios', etiqueta: 'Usuarios', permiso: 'usuarios:read', render: renderUsuarios },
+      { id: 'auditoria', etiqueta: 'Auditoría', permiso: 'auditoria:read', render: renderAuditoria }
+    ];
+
+    const sesion = exigirSesion();
+
+    if (sesion) {
+      document.getElementById('usuario-info').textContent =
+        sesion.usuario.nombres + ' ' + sesion.usuario.apellidos + ' · ' + sesion.usuario.cargo;
+
+      const menu = document.getElementById('menu-modulos');
+      MODULOS.forEach(function (mod) {
+        if (!tienePermiso(mod.permiso)) return;
+        const link = document.createElement('a');
+        link.href = '#';
+        link.textContent = mod.etiqueta;
+        link.addEventListener('click', function (ev) {
+          ev.preventDefault();
+          document.querySelectorAll('#menu-modulos a').forEach(function (a) { a.classList.remove('activo'); });
+          link.classList.add('activo');
+          mod.render();
+        });
+        menu.appendChild(link);
+      });
+
+      document.getElementById('btn-logout').addEventListener('click', cerrarSesion);
+    }
+  </script>
+</body>
+</html>
