@@ -25,12 +25,17 @@ async function renderAsistencia() {
     const data = await llamarConManejoDeErrores(llamarApi(accion, {}));
     const items = data.items.map(function (item) {
       const copia = Object.assign({}, item);
-      copia.ubicacion = (item.lat && item.lng)
-        ? '<img class="mini-mapa" src="https://staticmap.openstreetmap.de/staticmap.php?center=' + item.lat + ',' + item.lng + '&zoom=16&size=140x100&maptype=mapnik&markers=' + item.lat + ',' + item.lng + ',red-pushpin" alt="Ubicación de la marca" loading="lazy">'
-        : '—';
+      copia.ubicacion = (item.lat && item.lng) ? generarMiniMapa_(item.lat, item.lng) : '—';
       return copia;
     });
     renderTabla('tabla-asistencia', columnas, items);
+  }
+
+  function generarMiniMapa_(lat, lng) {
+    const delta = 0.003;
+    const bbox = (lng - delta) + ',' + (lat - delta) + ',' + (lng + delta) + ',' + (lat + delta);
+    const src = 'https://www.openstreetmap.org/export/embed.html?bbox=' + bbox + '&layer=mapnik&marker=' + lat + ',' + lng;
+    return '<iframe class="mini-mapa" src="' + src + '" loading="lazy"></iframe>';
   }
 
   function obtenerUbicacion() {
