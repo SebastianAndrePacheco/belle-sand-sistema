@@ -26,7 +26,7 @@ async function renderAsistencia() {
     const items = data.items.map(function (item) {
       const copia = Object.assign({}, item);
       copia.ubicacion = (item.lat && item.lng)
-        ? '<a href="https://www.google.com/maps?q=' + item.lat + ',' + item.lng + '" target="_blank" rel="noopener">Ver en el mapa</a>'
+        ? '<img class="mini-mapa" src="https://staticmap.openstreetmap.de/staticmap.php?center=' + item.lat + ',' + item.lng + '&zoom=16&size=140x100&maptype=mapnik&markers=' + item.lat + ',' + item.lng + ',red-pushpin" alt="Ubicación de la marca" loading="lazy">'
         : '—';
       return copia;
     });
